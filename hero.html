@@ -271,34 +271,40 @@
       .process-section {
         padding: 60px 0 100px;
       }
-      .process-separator {
+      .process-separator,
+      .section-separator {
         width: 100%;
         height: 1px;
         background: var(--line);
       }
-      .process-top-content {
+      .process-top-content,
+      .section-top-content {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         align-items: center;
         padding: 16px 0 24px;
       }
-      .process-top-col {
+      .process-top-col,
+      .section-top-col {
         display: flex;
         align-items: center;
       }
-      .process-top-col.center {
+      .process-top-col.center,
+      .section-top-col.center {
         justify-content: center;
       }
-      .process-top-col.right {
+      .process-top-col.right,
+      .section-top-col.right {
         justify-content: flex-end;
       }
       .process-cards {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        border: 1px solid var(--line);
+        border: 1px hsl(0, 0%, 10%) solid var(--line);
         border-radius: 13px;
         overflow: hidden;
         background: var(--bg);
+        gap:15px
       }
       .process-card {
         position: relative;
@@ -439,6 +445,124 @@
         font-size: 16px;
         line-height: 1.6;
         color: var(--text-muted);
+      }
+
+      /* Works */
+      .works-section {
+        padding: 80px 0 120px;
+      }
+      .works-title {
+        font-family: var(--display-font);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        font-size: clamp(32px, 8vw, 120px);
+        line-height: 0.9;
+        text-align: left;
+        margin: 0 0 30px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 255, 255, 0.75)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .work-row {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 40px;
+        align-items: center;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.02);
+        margin-bottom: 40px;
+        margin-top: 24px;
+      }
+      .work-media {
+        aspect-ratio: 16/10;
+        background: var(--tile);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+      }
+      .work-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .work-badge {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        font-family: var(--display-font);
+        font-size: 12px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(0, 0, 0, 0.35);
+        color: var(--text);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+      }
+      .work-info h4 {
+        margin: 0 0 8px;
+        font-family: var(--display-font);
+        font-size: 40px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .work-info p {
+        margin: 0 0 16px;
+        color: var(--text-muted);
+        font-size: 16px;
+        line-height: 1.7;
+      }
+      .work-meta {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 24px;
+        color: var(--text-muted);
+        font-size: 13px;
+      }
+      .work-meta div {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .work-meta .label {
+        color: var(--text-muted);
+        font-family: var(--display-font);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+      .work-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        text-decoration: none;
+        color: var(--text);
+        font-family: var(--display-font);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 1199px) {
+        .work-row {
+          grid-template-columns: 1fr;
+        }
+        .works-title {
+          text-align: center;
+        }
       }
 
       /* Responsive */
@@ -673,6 +797,86 @@
             </p>
           </div>
         </div>
+      </section>
+
+      <section class="container works-section" aria-label="Selected Works">
+        <div class="section-separator"></div>
+        <div class="section-top-content">
+          <div class="section-top-col"><div class="label">02</div></div>
+          <div class="section-top-col center">
+            <div class="label">//Selected Works</div>
+          </div>
+          <div class="section-top-col right">
+            <div class="sub">Case Studies</div>
+          </div>
+        </div>
+
+        <!-- <h2 class="works-title">Selected Works</h2> -->
+
+        <article class="work-row">
+          <div class="work-media">
+            <span class="work-badge">View Project</span>
+            <img
+              src="proto/framerusercontent.com/images/QDcJB2OLe3UAxM2RM7hyw8eeCo.jpg"
+              alt="GAM Dashboard"
+            />
+          </div>
+          <div class="work-info">
+            <h4>GAM</h4>
+            <p>
+              Healthcare metrics platform. I led backend architecture, data
+              pipelines, and admin dashboards, integrating AI for insights.
+            </p>
+            <div class="work-meta">
+              <div>
+                <span class="label">Live Site</span><span>gamesasures.com</span>
+              </div>
+              <div>
+                <span class="label">Industry</span><span>Healthcare</span>
+              </div>
+              <div>
+                <span class="label">Deliverables</span
+                ><span>API, Data, Admin</span>
+              </div>
+            </div>
+            <p style="margin-top: 16px">
+              <a class="work-link" href="#">View Project</a>
+            </p>
+          </div>
+        </article>
+
+        <article class="work-row">
+          <div class="work-media">
+            <span class="work-badge">View Project</span>
+            <img
+              src="proto/framerusercontent.com/images/QDcJB2OLe3UAxM2RM7hyw8eeCo.jpg"
+              alt="Expert Insights"
+            />
+          </div>
+          <div class="work-info">
+            <h4>Expert Insights</h4>
+            <p>
+              Cybersecurity research platform. Built full‑stack features:
+              content ingestion, vector search, and analytics.
+            </p>
+            <div class="work-meta">
+              <div>
+                <span class="label">Live Site</span
+                ><span>expertinsights.com</span>
+              </div>
+              <div>
+                <span class="label">Industry</span><span>Cybersecurity</span>
+              </div>
+              <div>
+                <span class="label">Deliverables</span
+                ><span>Backend, AI, Web</span>
+              </div>
+            </div>
+            <p style="margin-top: 16px">
+              <a class="work-link" href="#">View Project</a>
+            </p>
+          </div>
+        </article>
       </section>
     </main>
 
