@@ -226,6 +226,131 @@
         color: var(--blue);
       }
 
+      /* Image band */
+      .image-band {
+        padding: 0 0 80px;
+      }
+      .image-wrap {
+        position: relative;
+        width: 100%;
+      }
+      .image-placeholder {
+        width: 100%;
+        height: clamp(240px, 40vw, 560px);
+        border-radius: 16px;
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.03),
+            rgba(255, 255, 255, 0.01)
+          ),
+          var(--tile);
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        font-family: var(--display-font);
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      /* Process */
+      .process-section {
+        padding: 60px 0 100px;
+      }
+      .process-separator {
+        width: 100%;
+        height: 1px;
+        background: var(--line);
+      }
+      .process-top-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+        padding: 16px 0 24px;
+      }
+      .process-top-col {
+        display: flex;
+        align-items: center;
+      }
+      .process-top-col.center {
+        justify-content: center;
+      }
+      .process-top-col.right {
+        justify-content: flex-end;
+      }
+      .process-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      .process-card {
+        padding: 24px;
+        text-align: center;
+        border-right: 1px solid var(--line);
+      }
+      .process-card:last-child {
+        border-right: 0;
+      }
+      .process-circle {
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 12px;
+        font-family: var(--display-font);
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        background: var(--tile);
+        color: var(--text);
+      }
+      .process-heading {
+        margin: 6px 0 8px;
+        font-family: var(--display-font);
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        color: var(--text);
+      }
+      .process-text {
+        margin: 0;
+        font-family: var(--ui-font);
+        font-size: 14px;
+        color: var(--text-muted);
+        text-align: center;
+      }
+
+      .process-intro {
+        padding: 24px 0 40px;
+        text-align: center;
+      }
+      .process-title {
+        margin: 0 0 14px;
+        font-family: var(--display-font);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        line-height: 0.9;
+        font-size: clamp(32px, 7vw, 120px);
+        color: var(--text);
+      }
+      .process-sub {
+        margin: 0;
+        font-family: var(--ui-font);
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--text-muted);
+      }
+
       /* Responsive */
       @media (max-width: 1199px) {
         .meta {
@@ -320,6 +445,59 @@
             </svg>
             <div class="label">DIGITAL DESIGNER</div>
             <div class="sub">+ FRAMER DEVELOPER</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container image-band" aria-label="Hero Image">
+        <div class="image-wrap">
+          <div class="image-placeholder">IMAGE PLACEHOLDER</div>
+        </div>
+      </section>
+
+      <section class="container process-section" aria-label="Process">
+        <div class="process-separator"></div>
+        <div class="process-top-content">
+          <div class="process-top-col"><div class="label">01</div></div>
+          <div class="process-top-col center">
+            <div class="label">//Approach</div>
+          </div>
+          <div class="process-top-col right">
+            <div class="sub">Three Phases</div>
+          </div>
+        </div>
+
+        <div class="process-intro">
+          <h3 class="process-title">
+            I'M HUsnain Asim BASED<br />IN CALIFORNIA, USA.
+          </h3>
+          <p class="process-sub">
+            I employed responsive design skills to maintain consistency across
+            all devices.
+          </p>
+        </div>
+
+        <div class="process-cards">
+          <div class="process-card">
+            <div class="process-circle"><span>01</span></div>
+            <h5 class="process-heading">Discover and Analysis</h5>
+            <p class="process-text">
+              Discover opportunities and refine strategies for decisions.
+            </p>
+          </div>
+          <div class="process-card">
+            <div class="process-circle"><span>02</span></div>
+            <h5 class="process-heading">Design and Implement</h5>
+            <p class="process-text">
+              Design and implement solutions to transform ideas.
+            </p>
+          </div>
+          <div class="process-card">
+            <div class="process-circle"><span>03</span></div>
+            <h5 class="process-heading">Deliver and Monitor</h5>
+            <p class="process-text">
+              Ensure efficient execution and performance tracking.
+            </p>
           </div>
         </div>
       </section>
