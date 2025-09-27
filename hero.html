@@ -304,7 +304,7 @@
         border-radius: 13px;
         overflow: hidden;
         background: var(--bg);
-        gap:15px
+        gap: 15px;
       }
       .process-card {
         position: relative;
@@ -554,6 +554,118 @@
         font-family: var(--display-font);
         font-size: 12px;
         text-transform: uppercase;
+      }
+
+      /* Services */
+      .services-section {
+        padding: 80px 0 120px;
+      }
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-top: 24px;
+      }
+      .service-card {
+        position: relative;
+        padding: 24px;
+        background: var(--tile);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        isolation: isolate;
+        will-change: transform, box-shadow;
+        text-align: left;
+      }
+      .service-card .service-icon {
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 0 12px;
+        background: var(--tile);
+        color: var(--text);
+      }
+      .service-title {
+        margin: 6px 0 8px;
+        font-family: var(--display-font);
+        font-size: 18px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        color: var(--text);
+      }
+      .service-text {
+        margin: 0 0 12px;
+        font-family: var(--ui-font);
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--text-muted);
+      }
+      .service-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 6px;
+        color: var(--text-muted);
+        font-family: var(--ui-font);
+        font-size: 14px;
+      }
+      .service-list li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .service-list li::before {
+        content: "—";
+        color: var(--text);
+        opacity: 0.6;
+      }
+      .service-card[data-tilt]::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: 12px;
+        background: radial-gradient(
+            120px 80px at var(--mx, 50%) var(--my, 30%),
+            rgba(0, 157, 255, 0.14),
+            transparent 60%
+          ),
+          radial-gradient(
+            120px 80px at var(--mx, 50%) var(--my, 30%),
+            rgba(20, 199, 0, 0.1),
+            transparent 60%
+          );
+        filter: blur(8px);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        pointer-events: none;
+        z-index: -1;
+      }
+      .service-card[data-tilt]:hover::before {
+        opacity: 1;
+      }
+      .service-card[data-tilt]:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      }
+      .service-card {
+        transform: translateY(18px) scale(0.995);
+        opacity: 0;
+        transition: transform 520ms cubic-bezier(0.2, 0.9, 0.2, 1),
+          opacity 520ms;
+      }
+      .service-card.in-view {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      @media (max-width: 1199px) {
+        .services-grid {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 1199px) {
@@ -878,6 +990,108 @@
           </div>
         </article>
       </section>
+
+      <section class="container services-section" aria-label="Services">
+        <div class="section-separator"></div>
+        <div class="section-top-content">
+          <div class="section-top-col"><div class="label">03</div></div>
+          <div class="section-top-col center">
+            <div class="label">//Services</div>
+          </div>
+          <div class="section-top-col right">
+            <div class="sub">What I Offer</div>
+          </div>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card" data-tilt>
+            <div class="service-icon" aria-hidden="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M3 3h18v18H3z" />
+                <path d="M7 7h10v4H7z" />
+                <path d="M7 15h6" />
+              </svg>
+            </div>
+            <h5 class="service-title">Product Strategy & AI</h5>
+            <p class="service-text">
+              Shape the roadmap, validate concepts, and apply LLMs where they
+              drive real outcomes.
+            </p>
+            <ul class="service-list">
+              <li>Discovery, specs, success metrics</li>
+              <li>Prompt & eval design</li>
+              <li>Prototyping & UX flows</li>
+            </ul>
+          </article>
+
+          <article class="service-card" data-tilt>
+            <div class="service-icon" aria-hidden="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 4h16v12H4z" />
+                <path d="M2 20h20" />
+                <path d="M8 8h8v4H8z" />
+              </svg>
+            </div>
+            <h5 class="service-title">Backend APIs & Systems</h5>
+            <p class="service-text">
+              Design and ship reliable services with strong data models and
+              observability.
+            </p>
+            <ul class="service-list">
+              <li>REST/GraphQL, auth, rate limits</li>
+              <li>Background jobs & queues</li>
+              <li>Databases, vector search</li>
+            </ul>
+          </article>
+
+          <article class="service-card" data-tilt>
+            <div class="service-icon" aria-hidden="true">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="4" width="7" height="7" />
+                <rect x="14" y="4" width="7" height="7" />
+                <rect x="3" y="15" width="7" height="7" />
+                <rect x="14" y="15" width="7" height="7" />
+              </svg>
+            </div>
+            <h5 class="service-title">Full‑Stack Web Apps</h5>
+            <p class="service-text">
+              Polished UIs with production‑grade performance and accessibility.
+            </p>
+            <ul class="service-list">
+              <li>Design systems & components</li>
+              <li>SSR, caching, CDNs</li>
+              <li>Analytics & monitoring</li>
+            </ul>
+          </article>
+        </div>
+      </section>
     </main>
 
     <script>
@@ -895,7 +1109,9 @@
       setInterval(updateClock, 1000);
 
       // tilt glow tracking for process cards
-      const tiltCards = document.querySelectorAll(".process-card[data-tilt]");
+      const tiltCards = document.querySelectorAll(
+        ".process-card[data-tilt], .service-card[data-tilt]"
+      );
       tiltCards.forEach((card) => {
         card.addEventListener("mousemove", (e) => {
           const rect = card.getBoundingClientRect();
@@ -935,7 +1151,7 @@
       if (!preferReduced) title?.classList.add("reveal");
 
       // IntersectionObserver for .process-card
-      const cards = document.querySelectorAll(".process-card");
+      const cards = document.querySelectorAll(".process-card, .service-card");
       if ("IntersectionObserver" in window && !preferReduced) {
         const obs = new IntersectionObserver(
           (entries, o) => {
