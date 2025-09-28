@@ -15,18 +15,32 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # Optional: run lint/tests/build steps here
-      # - name: Run tests
+      # Optional: run tests or build steps here
+      # - name: Install / Test
       #   run: |
       #     npm ci
       #     npm test
 
-      - name: Deploy to Vercel (Preview on PRs, Production on main)
-        uses: amondnet/vercel-action@v20 # popular vercel action
+      - name: Deploy to Vercel (Production)
+        if: github.ref == 'refs/heads/production'
+        uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-args: '--prod'            # remove for preview-only; conditionalize if you want previews for PRs
-          working-directory: '.'           # change if your site is in a subfolder
+          # either of these is accepted by the action - set your team/org id
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          # or: scope: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel (Preview)
+        if: github.event_name == 'pull_request' || github.ref != 'refs/heads/production'
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          # no --prod so this creates a preview deployment
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
