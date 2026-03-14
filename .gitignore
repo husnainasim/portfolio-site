@@ -2,3 +2,5 @@ proto/
 .vscode/
 hero.html
 .vercel
+
+*.webm
