@@ -1422,8 +1422,10 @@
     <script>window.JOURNEY_IMG = 'images/image.png';</script>
 
     <style>
+      /* ── Journey Section: Scroll-driven card animation (matching Framer reference) ── */
+
       #jny-driver {
-        height: 420vh;
+        height: 340vh;
         position: relative;
       }
 
@@ -1431,11 +1433,14 @@
         position: sticky;
         top: 0;
         height: 100vh;
-        overflow: hidden;
+        overflow: clip;
         background: var(--bg);
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: 64px;
+        padding: 124px 96px 64px;
       }
 
       #jny-header {
@@ -1456,20 +1461,21 @@
       }
 
       #jny-heading {
-        position: absolute;
-        top: 13%;
-        left: 50%;
-        transform: translateX(-50%);
         white-space: nowrap;
         font-family: Georgia, 'Times New Roman', serif;
         font-size: clamp(22px, 3.2vw, 52px);
         font-weight: 400;
-        letter-spacing: -0.015em;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        text-align: center;
         color: var(--text);
-        opacity: 0;
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.71);
         z-index: 20;
         pointer-events: none;
         user-select: none;
+        will-change: transform, opacity;
+        opacity: 0;
+        transform: translateY(30px);
       }
 
       #jny-heading em {
@@ -1477,49 +1483,34 @@
         color: rgba(255, 255, 255, 0.68);
       }
 
-      #jny-origin {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 14px;
-        overflow: hidden;
+      /* Cards wrapper — holds all 3 cards, positioned centrally */
+      #jny-cards-wrap {
+        position: relative;
+        width: clamp(780px, 82vw, 1200px);
+        height: clamp(340px, 36vw, 520px);
+        flex-shrink: 0;
         will-change: transform, opacity;
-        z-index: 5;
-      }
-
-      #jny-origin img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        user-select: none;
-        pointer-events: none;
-        border-radius: 14px;
-      }
-
-      #jny-cards {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        pointer-events: none;
+        opacity: 1;
+        transform: scale(1.2);
+        border-radius: 35px;
         z-index: 10;
-        perspective: 1200px;         /* FIXED BUG 8: 3D perspective */
-        perspective-origin: 50% 45%; /* FIXED BUG 8 */
       }
 
+      /* Individual card — 334/1066 = 31.33% width, matching reference exactly */
       .jc {
         position: absolute;
         top: 0;
-        left: 0;
-        width: clamp(220px, 20vw, 300px);
-        aspect-ratio: 3 / 4.8;
+        bottom: 0;
+        width: 31.33%;
+        height: 100%;
         transform-style: preserve-3d;
         will-change: transform, opacity;
-        opacity: 0;
       }
+
+      /* Reference positions: left:33px, center:calc(50%-167px), right:33px */
+      #jc1 { left: 3.1%; z-index: 4; }
+      #jc2 { left: calc(50% - 15.67%); z-index: 5; }
+      #jc3 { right: 3.1%; left: auto; z-index: 6; }
 
       .jc-inner {
         position: absolute;
@@ -1531,7 +1522,6 @@
       .jc-face {
         position: absolute;
         inset: 0;
-        border-radius: 18px;
         overflow: hidden;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
@@ -1539,11 +1529,15 @@
 
       .jc-front {
         background-repeat: no-repeat;
-        background-size: 310% 100%;
+        background-size: 300% 100%;
+        border-radius: 0;
       }
 
+      /* When grouped, only outer edges rounded (matching reference 35px container) */
       #jc1 .jc-front {
         background-position: 0% 50%;
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
       }
 
       #jc2 .jc-front {
@@ -1552,6 +1546,8 @@
 
       #jc3 .jc-front {
         background-position: 100% 50%;
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
       }
 
       .jc-back {
@@ -1559,7 +1555,8 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: clamp(14px, 1.5vw, 22px);
+        padding: clamp(18px, 1.6vw, 24px) clamp(22px, 2.2vw, 32px) clamp(22px, 2.2vw, 32px);
+        border-radius: 12px;
         box-shadow:
           0 50px 120px rgba(0, 0, 0, 0.85),
           0 4px 8px rgba(0, 0, 0, 0.5);
@@ -1571,6 +1568,7 @@
 
       #jc2 .jc-back {
         background: linear-gradient(162deg, #de0000 0%, #640000 100%);
+        border-radius: 16px;
       }
 
       #jc3 .jc-back {
@@ -1579,57 +1577,42 @@
       }
 
       .jc-icon {
-        width: 23px;
-        height: 23px;
+        width: 24px;
+        height: 24px;
         flex-shrink: 0;
       }
 
       .jc-content {
         display: flex;
         flex-direction: column;
-        gap: 9px;
+        gap: 10px;
       }
 
       .jc-title {
         font-family: var(--display-font);
-        font-size: clamp(16px, 1.5vw, 23px);
+        font-size: clamp(20px, 2vw, 30px);
         font-weight: 600;
         line-height: 1.1;
         margin: 0;
       }
 
-      #jc1 .jc-title {
-        color: #111;
-      }
-
-      #jc2 .jc-title,
-      #jc3 .jc-title {
-        color: #fff;
-      }
+      #jc1 .jc-title { color: #111; }
+      #jc2 .jc-title, #jc3 .jc-title { color: #fff; }
 
       .jc-desc {
         font-family: var(--ui-font);
-        font-size: clamp(10px, 0.78vw, 12px);
+        font-size: clamp(10px, 0.85vw, 13px);
         line-height: 1.58;
         margin: 0;
       }
 
-      #jc1 .jc-desc {
-        color: #3d3d3d;
-      }
+      #jc1 .jc-desc { color: #3d3d3d; }
+      #jc2 .jc-desc { color: rgba(255, 255, 255, 0.6); }
+      #jc3 .jc-desc { color: rgba(255, 255, 255, 0.45); }
 
-      #jc2 .jc-desc {
-        color: rgba(255, 255, 255, 0.6);
-      }
-
-      #jc3 .jc-desc {
-        color: rgba(255, 255, 255, 0.45);
-      }
-
+      /* ── Mobile: flat stack, no scroll animation ── */
       @media (max-width: 768px) {
-        #jny-driver {
-          height: auto;
-        }
+        #jny-driver { height: auto; }
 
         #jny-section {
           position: static;
@@ -1650,21 +1633,15 @@
           padding: 0;
         }
 
-        #jny-origin {
-          display: none;
-        }
-
         #jny-heading {
-          position: static;
-          transform: none;
           opacity: 1;
+          transform: none;
           white-space: normal;
           text-align: center;
           padding: 0 10px;
         }
 
-        #jny-cards {
-          position: static;
+        #jny-cards-wrap {
           width: 100%;
           height: auto;
           display: flex;
@@ -1672,11 +1649,14 @@
           align-items: center;
           gap: 18px;
           pointer-events: auto;
+          transform: none !important;
+          border-radius: 0;
         }
 
         .jc {
           position: static;
           width: min(310px, 86vw);
+          height: auto;
           aspect-ratio: 3 / 4;
           transform: none !important;
           opacity: 1 !important;
@@ -1689,9 +1669,7 @@
           transform-style: flat;
         }
 
-        .jc-front {
-          display: none;
-        }
+        .jc-front { display: none; }
 
         .jc-back {
           transform: none;
@@ -1722,11 +1700,7 @@
 
         <p id="jny-heading">Where are you <em>in</em> your journey?</p>
 
-        <div id="jny-origin">
-          <img id="jny-origin-img" src="" alt="" draggable="false" />
-        </div>
-
-        <div id="jny-cards">
+        <div id="jny-cards-wrap">
           <div class="jc" id="jc1">
             <div class="jc-inner">
               <div class="jc-face jc-front"></div>
@@ -1788,183 +1762,218 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
     <script>
+      /**
+       * Journey Section — Scroll-linked animation
+       * Matches the Framer reference: sticky section with 340vh scroll runway,
+       * combined card image → split → 3D flip → fan-out.
+       */
       (function () {
         'use strict';
 
         const isMobile = () => window.innerWidth <= 768;
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        const driver = document.getElementById('jny-driver');
-        const header = document.getElementById('jny-header');
-        const heading = document.getElementById('jny-heading');
-        const origin = document.getElementById('jny-origin');
-        const originImg = document.getElementById('jny-origin-img');
-        const cardsWrap = document.getElementById('jny-cards');
-        const cards = ['jc1', 'jc2', 'jc3'].map(id => document.getElementById(id));
-        const inners = cards.map(c => c?.querySelector('.jc-inner'));
-        const fronts = cards.map(c => c.querySelector('.jc-front'));
+        /* ── DOM refs ─────────────────────────────────────────── */
+        const driver   = document.getElementById('jny-driver');
+        const header   = document.getElementById('jny-header');
+        const heading  = document.getElementById('jny-heading');
+        const wrap     = document.getElementById('jny-cards-wrap');
+        const cards    = ['jc1', 'jc2', 'jc3'].map(id => document.getElementById(id));
+        const inners   = cards.map(c => c?.querySelector('.jc-inner'));
+        const fronts   = cards.map(c => c?.querySelector('.jc-front'));
 
-        if (!driver || !header || !heading || !origin || !originImg || !cardsWrap || cards.some((c) => !c) || inners.some((i) => !i)) {
-          return;
-        }
+        if (!driver || !header || !heading || !wrap || cards.some(c => !c) || inners.some(i => !i)) return;
 
+        /* ── Set background image on card fronts ────────────── */
         const imgSrc = window.JOURNEY_IMG || '';
-        originImg.src = imgSrc;
-        fronts.forEach((f) => { f.style.backgroundImage = `url('${imgSrc}')`; });
+        fronts.forEach(f => { if (f) f.style.backgroundImage = `url('${imgSrc}')`; });
 
-        function sizeOrigin() {
-          if (isMobile()) return;
-          const vw = window.innerWidth;
-          const w = Math.round(Math.min(1060, Math.max(300, vw * 0.74)));
-          const h = Math.round(Math.min(530, Math.max(180, vw * 0.375)));
-          origin.style.width = w + 'px';
-          origin.style.height = h + 'px';
-        }
+        /* ── Easing helpers ──────────────────────────────────── */
+        const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+        const norm  = (v, lo, hi) => clamp((v - lo) / (hi - lo), 0, 1);
+        const eOut3 = t => 1 - Math.pow(1 - t, 3);                           // cubic ease-out
+        const eOut4 = t => 1 - Math.pow(1 - t, 4);                           // quartic ease-out
+        const eIO3  = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3) / 2;  // cubic ease-in-out
+        const lerp  = (a, b, t) => a + (b - a) * t;
 
-        sizeOrigin();
-        window.addEventListener('resize', sizeOrigin, { passive: true });
-
-        const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
-        const norm = (v, a, b) => clamp((v - a) / (b - a), 0, 1);
-        const eOut3 = (t) => 1 - Math.pow(1 - t, 3);
-        const eOut4 = (t) => 1 - Math.pow(1 - t, 4);
-        const eIO = (t) => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        /* ── Scroll-progress timeline (0 → 1 across the 340vh) ─ */
+        /*    Matches Framer reference phases exactly               */
 
         const P = {
-          hdrIn:   [0.03, 0.20], // unchanged
-          headIn:  [0.05, 0.22], // FIXED BUG 7
-          origOut: [0.10, 0.30], // FIXED BUG 7
-          cardIn:  [0.12, 0.32], // FIXED BUG 7
-          split:   [0.30, 0.52], // FIXED BUG 7: split starts AFTER heading done
-          fan:     [0.62, 0.90], // FIXED BUG 7
-          exit:    [0.92, 1.00], // FIXED BUG 7
+          /* Phase 1: Header + heading fade-in / slide-up */
+          hdrIn:    [0.00, 0.12],
+          headIn:   [0.02, 0.15],
+
+          /* Phase 2: Card container zooms from 1.2 → 1.0 */
+          zoomIn:   [0.02, 0.22],
+
+          /* Phase 3: Cards split apart from grouped rectangle */
+          split:    [0.22, 0.40],
+
+          /* Phase 4: Cards flip 180° (staggered per card) */
+          flip: [
+            [0.38, 0.54],   // card 1 flips first
+            [0.43, 0.59],   // card 2 flips second
+            [0.48, 0.64],   // card 3 flips last
+          ],
+
+          /* Phase 5: Cards fan out with rotation */
+          fan:      [0.55, 0.78],
+
+          /* Phase 6: Gentle exit */
+          exit:     [0.90, 1.00],
         };
 
-        // FIXED BUG 6: per-card staggered flip windows (left→center→right)
-        const FLIP_WINDOWS = [
-          [0.56, 0.72], // Card 1 flips first
-          [0.62, 0.78], // Card 2 flips second
-          [0.68, 0.84], // Card 3 flips last
-        ];
+        /* ── Layout: Split positions (% of wrapper width from center) ── */
+        /* When grouped, cards are at ~3%/34%/66%. Split moves them barely apart. */
+        const SPLIT_OFFSET = [-0.8, 0, 0.8]; // vw — very subtle spread (reference barely moves them)
 
-        // FIXED BUG 5: split positions are separate from fan positions
-        const SPLIT_TX = [-22, 0, 22]; // vw — triptych spread
+        /* ── Fan positions / rotations (matching reference exactly) ── */
+        /* Reference: cards stay almost in their grouped positions.              */
+        /* The "fan" effect comes from rotation + vertical offset, NOT spread.   */
+        const FAN_TX = [-0.3, 0, 0.3];     // vw — near-zero horizontal shift
+        const FAN_TY = [2.8, -0.5, 1.85];  // vh — left:-30px, center:up slightly, right:-20px
+        const FAN_RZ = [-8, 0, 6];         // degrees rotation (matches reference)
+        const FAN_SCALE = [1, 1.02, 1];    // center card barely larger
 
-        const FAN_TX = [-19, 0, 19];
-        const FAN_TY = [0, -1.8, 0];
-        const FAN_RZ = [-8, 0, 5];
+        /* ── Breathing float when fanned out (subtle) ── */
+        const BREATH_PHASE = [0.0, 1.1, 2.2];
+        const BREATH_AMP   = [3, 2, 2.5];
 
-        const BREATH_OFF = [0.0, 1.1, 2.2];
-        const BREATH_AMP = [7, 5, 6];
-
+        /* ── Reduced motion: show final state instantly ── */
         if (reduceMotion) {
           header.style.opacity = '1';
           heading.style.opacity = '1';
-          origin.style.opacity = '0';
+          heading.style.transform = 'none';
+          wrap.style.transform = 'none';
+          wrap.style.borderRadius = '0';
           cards.forEach((c, i) => {
-            c.style.transform = `translate(calc(${FAN_TX[i]}vw - 50%), calc(${FAN_TY[i]}vh - 50%)) rotateZ(${FAN_RZ[i]}deg) scale(${i === 1 ? '1.06' : '1'})`;
+            c.style.transform = `rotateZ(${FAN_RZ[i]}deg) translateY(${FAN_TY[i]}vh)`;
             inners[i].style.transform = 'rotateY(180deg)';
-            c.style.opacity = '1';
           });
-          cardsWrap.style.pointerEvents = 'auto';
+          wrap.style.pointerEvents = 'auto';
           return;
         }
 
         if (isMobile()) return;
 
-        function getProgress() {
+        /* ── GSAP ScrollTrigger for buttery-smooth scrubbing ── */
+        let scrollProgress = 0;
+        let useGSAP = false;
+
+        function setupGSAP() {
+          if (!window.gsap || !window.ScrollTrigger || isMobile()) return;
+          window.gsap.registerPlugin(window.ScrollTrigger);
+
+          window.gsap.to({ p: 0 }, {
+            p: 1,
+            ease: 'none',
+            onUpdate: function () { scrollProgress = this.targets()[0].p; },
+            scrollTrigger: {
+              trigger: driver,
+              start: 'top top',
+              end: () => '+=' + (driver.offsetHeight - window.innerHeight),
+              scrub: 1.2,
+              invalidateOnRefresh: true,
+            }
+          });
+          useGSAP = true;
+        }
+        setupGSAP();
+
+        /* Fallback progress if GSAP not available */
+        function getRawProgress() {
           const r = driver.getBoundingClientRect();
           return clamp(-r.top / (driver.offsetHeight - window.innerHeight), 0, 1);
         }
 
-        let scrollProgress = 0;
-        let useScrollTrigger = false;
-        let scrollTween = null;
-
-        function setupScrollTrigger() {
-          if (!window.gsap || !window.ScrollTrigger || isMobile()) return;
-          window.gsap.registerPlugin(window.ScrollTrigger);
-          const scrollDistance = Math.max(Math.round(window.innerHeight * 3.2), driver.offsetHeight - window.innerHeight);
-          scrollTween = window.gsap.to({ p: 0 }, {
-            p: 1,
-            ease: 'none',
-            onUpdate: function () {
-              scrollProgress = this.targets()[0].p;
-            },
-            scrollTrigger: {
-              trigger: driver,
-              start: 'top top',
-              end: '+=' + scrollDistance,
-              scrub: 1,
-              invalidateOnRefresh: true,
-            }
-          });
-          useScrollTrigger = true;
-        }
-
-        setupScrollTrigger();
-
+        /* ── Animation frame loop ───────────────────────────── */
         let raf;
 
         function frame() {
           raf = requestAnimationFrame(frame);
           if (isMobile()) return;
 
-          const p = useScrollTrigger ? scrollProgress : getProgress();
-          const now = Date.now() * 0.00072;
+          const p   = useGSAP ? scrollProgress : getRawProgress();
+          const now = Date.now() * 0.0007;
 
-          header.style.opacity = eOut3(norm(p, ...P.hdrIn)).toFixed(3);
-          header.style.pointerEvents = p > 0.06 ? 'auto' : 'none';
+          /* ▸ Phase 1: Header + Heading */
+          const hdrOp  = eOut3(norm(p, ...P.hdrIn));
+          header.style.opacity = hdrOp.toFixed(3);
+          header.style.pointerEvents = hdrOp > 0.3 ? 'auto' : 'none';
 
-          heading.style.opacity = eOut3(norm(p, ...P.headIn)).toFixed(3);
+          const headP = eOut3(norm(p, ...P.headIn));
+          heading.style.opacity   = headP.toFixed(3);
+          heading.style.transform = `translateY(${(30 * (1 - headP)).toFixed(1)}px)`;
 
-          const scl = 1 - eOut3(norm(p, 0.08, 0.28)) * 0.18; // FIXED BUG 7: scale 1→0.82 sequenced
-          origin.style.transform = `translate(-50%, -50%) scale(${scl.toFixed(4)})`;
-          origin.style.opacity = (1 - eOut4(norm(p, ...P.origOut))).toFixed(3);
+          /* ▸ Phase 2: Container zoom 1.2 → 1.0 */
+          const zoomP = eOut4(norm(p, ...P.zoomIn));
+          const containerScale = lerp(1.2, 1.0, zoomP);
 
-          const baseOp = eOut3(norm(p, ...P.cardIn));
-          const exitOp = 1 - norm(p, ...P.exit);
-          const pSplit = eOut3(norm(p, ...P.split)); // FIXED BUG 7: split is now 0.30–0.52
+          /* Container border-radius shrinks as cards start splitting */
+          const splitP = eOut3(norm(p, ...P.split));
+          const containerRadius = lerp(35, 0, clamp(splitP * 3, 0, 1));
 
-          // FIXED BUG 6: each card uses its own staggered flip window
-          const flips = cards.map((_, i) => eIO(norm(p, ...FLIP_WINDOWS[i])) * 180);
+          wrap.style.transform    = `scale(${containerScale.toFixed(4)})`;
+          wrap.style.borderRadius = `${containerRadius.toFixed(0)}px`;
+          wrap.style.opacity      = (1 - norm(p, ...P.exit)).toFixed(3);
 
-          const pFan = eOut3(norm(p, ...P.fan));
-          const pTilt3d = eOut3(norm(p, 0.52, 0.64));
-          const SIDE_Y = [-7, 0, 7];
+          /* ▸ Phase 3–5: Per-card transforms */
+          const fanP = eOut3(norm(p, ...P.fan));
 
           cards.forEach((card, i) => {
             const inner = inners[i];
-            const breathY = Math.sin(now + BREATH_OFF[i]) * BREATH_AMP[i] * Math.pow(pFan, 2);
-            const splitTx = SPLIT_TX[i] * pSplit;
-            const tx = splitTx + (FAN_TX[i] - SPLIT_TX[i]) * pFan;
-            const ty = FAN_TY[i] * pFan;
-            const rz = FAN_RZ[i] * pFan;
-            const ry = flips[i];
-            const sideY = SIDE_Y[i] * pTilt3d * (1 - pFan * 0.6);
-            const fanScale = i === 1 ? (1 + pFan * 0.05) : 1;
-            const exitScale = 1 + norm(p, ...P.exit) * 0.06;
-            const opacity = (baseOp * exitOp).toFixed(3);
 
+            /* Split: move cards apart from grouped position */
+            const splitTx = SPLIT_OFFSET[i] * splitP;  // vw
+
+            /* Fan: move from split position to final fanned position */
+            const fanTx = lerp(splitTx, FAN_TX[i], fanP);
+            const fanTy = FAN_TY[i] * fanP;
+            const fanRz = FAN_RZ[i] * fanP;
+            const fanScl = lerp(1, FAN_SCALE[i], fanP);
+
+            /* Breathing float (only active when fanned out) */
+            const breathY = Math.sin(now + BREATH_PHASE[i]) * BREATH_AMP[i] * Math.pow(fanP, 2);
+
+            /* Flip: staggered 3D card flip */
+            const flipP = eIO3(norm(p, ...P.flip[i]));
+            const flipDeg = flipP * 180;
+
+            /* Exit scale */
+            const exitP = norm(p, ...P.exit);
+            const exitScl = 1 + exitP * 0.05;
+
+            /* Border-radius: once split begins, give each card its own radius */
+            const cardRadius = lerp(0, 12, clamp(splitP * 2, 0, 1));
+
+            /* Compose card transform */
             card.style.transform = [
-              `translate(calc(${tx.toFixed(2)}vw - 50%),`,
-              `calc(${ty.toFixed(2)}vh - 50% + ${breathY.toFixed(2)}px))`,
-              `rotateZ(${rz.toFixed(2)}deg)`,
-              `rotateY(${sideY.toFixed(2)}deg)`,
-              `scale(${(fanScale * exitScale).toFixed(4)})`,
+              `translateX(${fanTx.toFixed(2)}vw)`,
+              `translateY(calc(${fanTy.toFixed(2)}vh + ${breathY.toFixed(1)}px))`,
+              `rotateZ(${fanRz.toFixed(2)}deg)`,
+              `scale(${(fanScl * exitScl).toFixed(4)})`,
             ].join(' ');
 
-            inner.style.transform = `rotateY(${ry.toFixed(2)}deg)`;
-            card.style.zIndex = i === 1 ? '3' : '1';
+            /* Inner flip */
+            inner.style.transform = `rotateY(${flipDeg.toFixed(1)}deg)`;
 
-            card.style.opacity = opacity;
+            /* Front face radius (transitions from grouped to individual) */
+            const fl = card.querySelector('.jc-front');
+            const bl = card.querySelector('.jc-back');
+            if (fl) fl.style.borderRadius = `${cardRadius.toFixed(0)}px`;
+
+            /* Card z-index: center card on top when fanned (matching reference z-order) */
+            card.style.zIndex = i === 1 ? '6' : (i === 2 ? '5' : '4');
           });
 
-          cardsWrap.style.pointerEvents = pFan > 0.85 ? 'auto' : 'none';
+          /* Pointer events: enable when fully fanned and not exiting */
+          wrap.style.pointerEvents = (fanP > 0.9 && norm(p, ...P.exit) < 0.1) ? 'auto' : 'none';
         }
 
         frame();
 
+        /* ── Resize: toggle between mobile/desktop ──────────── */
         let wasMobile = isMobile();
         window.addEventListener('resize', () => {
           const nowMobile = isMobile();
@@ -1972,22 +1981,23 @@
             wasMobile = nowMobile;
             cancelAnimationFrame(raf);
             if (!nowMobile) {
-              sizeOrigin();
-              if (window.ScrollTrigger) {
-                window.ScrollTrigger.refresh();
-              }
+              if (window.ScrollTrigger) window.ScrollTrigger.refresh();
               frame();
             } else {
+              /* Reset all inline styles for mobile CSS to take over */
+              [header, heading, wrap].forEach(el => {
+                el.style.opacity = '';
+                el.style.transform = '';
+                el.style.pointerEvents = '';
+              });
+              wrap.style.borderRadius = '';
               cards.forEach((c, i) => {
                 c.style.transform = '';
-                c.style.opacity = '';
+                c.style.zIndex = '';
                 inners[i].style.transform = '';
+                const fl = c.querySelector('.jc-front');
+                if (fl) fl.style.borderRadius = '';
               });
-              cardsWrap.style.pointerEvents = '';
-              header.style.opacity = '';
-              heading.style.opacity = '';
-              origin.style.opacity = '';
-              origin.style.transform = '';
             }
           }
         }, { passive: true });
