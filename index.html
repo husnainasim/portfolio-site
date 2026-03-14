@@ -1299,6 +1299,7 @@
         color: var(--text-muted);
         margin: 0 0 16px;
         display: -webkit-box;
+        line-clamp: 2;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
@@ -1418,11 +1419,465 @@
         </div>
       </section>
 
-      <section class="container image-band" aria-label="Hero Image">
-        <div class="image-wrap">
-          <div class="image-placeholder">IMAGE PLACEHOLDER</div>
-        </div>
-      </section>
+      <script>window.JOURNEY_IMG = 'images/image.png';</script>
+
+      <style>
+      #jny-driver {
+        height: 420vh;
+        position: relative;
+      }
+
+      #jny-section {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: hidden;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #jny-header {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 1480px;
+        padding: 0 30px;
+        z-index: 30;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #jny-header .section-separator { background: var(--line); }
+
+      #jny-heading {
+        position: absolute;
+        top: 13%;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(22px, 3.2vw, 52px);
+        font-weight: 400;
+        letter-spacing: -0.015em;
+        color: var(--text);
+        opacity: 0;
+        z-index: 20;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      #jny-heading em {
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.68);
+      }
+
+      #jny-origin {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 14px;
+        overflow: hidden;
+        will-change: transform, opacity;
+        z-index: 5;
+      }
+
+      #jny-origin img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        user-select: none;
+        pointer-events: none;
+        border-radius: 14px;
+      }
+
+      #jny-cards {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .jc {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: clamp(195px, 18vw, 268px);
+        aspect-ratio: 3 / 5;
+        transform-style: preserve-3d;
+        will-change: transform, opacity;
+        opacity: 0;
+      }
+
+      .jc-face {
+        position: absolute;
+        inset: 0;
+        border-radius: 18px;
+        overflow: hidden;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+
+      .jc-front {
+        background-repeat: no-repeat;
+        background-size: 310% 100%;
+      }
+
+      #jc1 .jc-front { background-position: 0% 50%; }
+      #jc2 .jc-front { background-position: 50% 50%; }
+      #jc3 .jc-front { background-position: 100% 50%; }
+
+      .jc-back {
+        transform: rotateY(180deg);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: clamp(14px, 1.5vw, 22px);
+        box-shadow:
+          0 50px 120px rgba(0, 0, 0, 0.85),
+          0 4px 8px rgba(0, 0, 0, 0.5);
+      }
+
+      #jc1 .jc-back {
+        background: linear-gradient(148deg, #dcdcdc 0%, #898989 100%);
+      }
+
+      #jc2 .jc-back {
+        background: linear-gradient(162deg, #de0000 0%, #640000 100%);
+      }
+
+      #jc3 .jc-back {
+        background: linear-gradient(148deg, #222222 0%, #0b0b0b 100%);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+      }
+
+      .jc-icon { width: 23px; height: 23px; flex-shrink: 0; }
+
+      .jc-content { display: flex; flex-direction: column; gap: 9px; }
+
+      .jc-title {
+        font-family: var(--display-font);
+        font-size: clamp(16px, 1.5vw, 23px);
+        font-weight: 600;
+        line-height: 1.1;
+        margin: 0;
+      }
+
+      #jc1 .jc-title { color: #111; }
+      #jc2 .jc-title,
+      #jc3 .jc-title { color: #fff; }
+
+      .jc-desc {
+        font-family: var(--ui-font);
+        font-size: clamp(10px, 0.78vw, 12px);
+        line-height: 1.58;
+        margin: 0;
+      }
+
+      #jc1 .jc-desc { color: #3d3d3d; }
+      #jc2 .jc-desc { color: rgba(255, 255, 255, 0.6); }
+      #jc3 .jc-desc { color: rgba(255, 255, 255, 0.45); }
+
+      @media (max-width: 768px) {
+        #jny-driver { height: auto; }
+
+        #jny-section {
+          position: static;
+          height: auto;
+          overflow: visible;
+          flex-direction: column;
+          padding: 60px 20px 80px;
+          gap: 36px;
+        }
+
+        #jny-header {
+          position: static;
+          transform: none;
+          opacity: 1;
+          pointer-events: auto;
+          margin-bottom: -12px;
+          max-width: none;
+          padding: 0;
+        }
+
+        #jny-origin { display: none; }
+
+        #jny-heading {
+          position: static;
+          transform: none;
+          opacity: 1;
+          white-space: normal;
+          text-align: center;
+          padding: 0 10px;
+        }
+
+        #jny-cards {
+          position: static;
+          width: 100%;
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 18px;
+          pointer-events: auto;
+        }
+
+        .jc {
+          position: static;
+          width: min(310px, 86vw);
+          aspect-ratio: 3 / 4;
+          transform: none !important;
+          opacity: 1 !important;
+          transform-style: flat;
+        }
+
+        .jc-front { display: none; }
+
+        .jc-back {
+          transform: none;
+          backface-visibility: visible;
+          -webkit-backface-visibility: visible;
+          border-radius: 16px;
+          min-height: 210px;
+        }
+      }
+      </style>
+
+      <div id="jny-driver">
+        <section id="jny-section" aria-label="Where are you in your journey">
+          <div id="jny-header">
+            <div class="section-separator"></div>
+            <div class="section-top-content">
+              <div class="section-top-col">
+                <div class="label">00</div>
+              </div>
+              <div class="section-top-col center">
+                <div class="label">//Journey</div>
+              </div>
+              <div class="section-top-col right">
+                <div class="sub">Where I Can Help</div>
+              </div>
+            </div>
+          </div>
+
+          <p id="jny-heading">Where are you <em>in</em> your journey?</p>
+
+          <div id="jny-origin">
+            <img id="jny-origin-img" src="" alt="" draggable="false" />
+          </div>
+
+          <div id="jny-cards">
+            <div class="jc" id="jc1">
+              <div class="jc-face jc-front"></div>
+              <div class="jc-face jc-back">
+                <svg class="jc-icon" viewBox="0 0 24 24" fill="none" stroke="#2a2a2a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                  <polyline points="16 7 22 7 22 13"/>
+                </svg>
+                <div class="jc-content">
+                  <h3 class="jc-title">Going<br>Zero to One</h3>
+                  <p class="jc-desc">You have an idea and need the foundation — ML pipelines, APIs, and scalable architecture built from scratch.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="jc" id="jc2">
+              <div class="jc-face jc-front"></div>
+              <div class="jc-face jc-back">
+                <svg class="jc-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.58)" stroke-width="1.5" aria-hidden="true">
+                  <circle cx="8" cy="8" r="3.5"/>
+                  <circle cx="16" cy="8" r="3.5"/>
+                  <circle cx="12" cy="16" r="3.5"/>
+                </svg>
+                <div class="jc-content">
+                  <h3 class="jc-title">Scaling from<br>One to N</h3>
+                  <p class="jc-desc">You have a working system. Now optimize inference, harden infrastructure, and scale to production load.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="jc" id="jc3">
+              <div class="jc-face jc-front"></div>
+              <div class="jc-face jc-back">
+                <svg class="jc-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.38)" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                  <path d="M12 3 L13.8 10.2 L21 12 L13.8 13.8 L12 21 L10.2 13.8 L3 12 L10.2 10.2 Z"/>
+                </svg>
+                <div class="jc-content">
+                  <h3 class="jc-title">Need Quick<br>Solutions</h3>
+                  <p class="jc-desc">You know exactly what you need. I step in and deliver the specific model, integration, or feature.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <script>
+      (function () {
+        'use strict';
+
+        const isMobile = () => window.innerWidth <= 768;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const driver = document.getElementById('jny-driver');
+        const header = document.getElementById('jny-header');
+        const heading = document.getElementById('jny-heading');
+        const origin = document.getElementById('jny-origin');
+        const originImg = document.getElementById('jny-origin-img');
+        const cardsWrap = document.getElementById('jny-cards');
+        const cards = ['jc1', 'jc2', 'jc3'].map(id => document.getElementById(id));
+        const fronts = cards.map(c => c.querySelector('.jc-front'));
+
+        if (!driver || !header || !heading || !origin || !originImg || !cardsWrap || cards.some((c) => !c)) {
+          return;
+        }
+
+        const imgSrc = window.JOURNEY_IMG || '';
+        originImg.src = imgSrc;
+        fronts.forEach((f) => { f.style.backgroundImage = `url('${imgSrc}')`; });
+
+        function sizeOrigin() {
+          if (isMobile()) return;
+          const vw = window.innerWidth;
+          const w = Math.round(Math.min(1060, Math.max(300, vw * 0.74)));
+          const h = Math.round(Math.min(530, Math.max(180, vw * 0.375)));
+          origin.style.width = w + 'px';
+          origin.style.height = h + 'px';
+        }
+
+        sizeOrigin();
+        window.addEventListener('resize', sizeOrigin, { passive: true });
+
+        const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
+        const norm = (v, a, b) => clamp((v - a) / (b - a), 0, 1);
+        const eOut3 = (t) => 1 - Math.pow(1 - t, 3);
+        const eOut4 = (t) => 1 - Math.pow(1 - t, 4);
+        const eIO = (t) => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+        const P = {
+          hdrIn: [0.03, 0.20],
+          headIn: [0.05, 0.24],
+          origOut: [0.07, 0.30],
+          cardIn: [0.10, 0.33],
+          split: [0.14, 0.50],
+          flip: [0.44, 0.74],
+          fan: [0.63, 0.90],
+          exit: [0.93, 1.00],
+        };
+
+        const FAN_TX = [-35, 0, 35];
+        const FAN_TY = [0, -1.8, 0];
+        const FAN_RZ = [-8, 0, 5];
+
+        const BREATH_OFF = [0.0, 1.1, 2.2];
+        const BREATH_AMP = [7, 5, 6];
+
+        if (reduceMotion) {
+          header.style.opacity = '1';
+          heading.style.opacity = '1';
+          origin.style.opacity = '0';
+          cards.forEach((c, i) => {
+            c.style.transform = `translate(calc(${FAN_TX[i]}vw - 50%), calc(${FAN_TY[i]}vh - 50%)) rotateZ(${FAN_RZ[i]}deg) rotateY(180deg)`;
+            c.style.opacity = '1';
+          });
+          cardsWrap.style.pointerEvents = 'auto';
+          return;
+        }
+
+        if (isMobile()) return;
+
+        function getProgress() {
+          const r = driver.getBoundingClientRect();
+          return clamp(-r.top / (driver.offsetHeight - window.innerHeight), 0, 1);
+        }
+
+        let raf;
+
+        function frame() {
+          raf = requestAnimationFrame(frame);
+          if (isMobile()) return;
+
+          const p = getProgress();
+          const now = Date.now() * 0.00072;
+
+          header.style.opacity = eOut3(norm(p, ...P.hdrIn)).toFixed(3);
+          header.style.pointerEvents = p > 0.06 ? 'auto' : 'none';
+
+          heading.style.opacity = eOut3(norm(p, ...P.headIn)).toFixed(3);
+
+          const scl = 1 - eOut3(norm(p, ...P.headIn)) * 0.17;
+          origin.style.transform = `translate(-50%, -50%) scale(${scl.toFixed(4)})`;
+          origin.style.opacity = (1 - eOut4(norm(p, ...P.origOut))).toFixed(3);
+
+          const baseOp = eOut3(norm(p, ...P.cardIn));
+          const exitOp = 1 - norm(p, ...P.exit);
+          const pSplit = eOut3(norm(p, ...P.split));
+
+          const flipOffsets = [-0.06, 0, 0.06];
+          const flips = cards.map((_, i) => {
+            const start = P.flip[0] + flipOffsets[i];
+            const end = P.flip[1] + flipOffsets[i];
+            return eIO(norm(p, start, end)) * 180;
+          });
+
+          const pFan = eOut3(norm(p, ...P.fan));
+
+          cards.forEach((card, i) => {
+            const breathY = Math.sin(now + BREATH_OFF[i]) * BREATH_AMP[i] * Math.pow(pFan, 2);
+            const splitTx = (i - 1) * 19.5 * pSplit;
+            const tx = splitTx * (1 - pFan) + FAN_TX[i] * pFan;
+            const ty = FAN_TY[i] * pFan;
+            const rz = FAN_RZ[i] * pFan;
+            const ry = flips[i];
+            const fanScale = i === 1 ? (1 + pFan * 0.05) : 1;
+            const exitScale = 1 + norm(p, ...P.exit) * 0.06;
+            const opacity = (baseOp * exitOp).toFixed(3);
+
+            card.style.transform = [
+              `translate(calc(${tx.toFixed(2)}vw - 50%),`,
+              `calc(${ty.toFixed(2)}vh - 50% + ${breathY.toFixed(2)}px))`,
+              `rotateZ(${rz.toFixed(2)}deg)`,
+              `rotateY(${ry.toFixed(2)}deg)`,
+              `scale(${(fanScale * exitScale).toFixed(4)})`,
+            ].join(' ');
+
+            card.style.opacity = opacity;
+          });
+
+          cardsWrap.style.pointerEvents = pFan > 0.85 ? 'auto' : 'none';
+        }
+
+        frame();
+
+        let wasMobile = isMobile();
+        window.addEventListener('resize', () => {
+          const nowMobile = isMobile();
+          if (wasMobile !== nowMobile) {
+            wasMobile = nowMobile;
+            cancelAnimationFrame(raf);
+            if (!nowMobile) {
+              sizeOrigin();
+              frame();
+            } else {
+              cards.forEach(c => { c.style.transform = ''; c.style.opacity = ''; });
+              cardsWrap.style.pointerEvents = '';
+              header.style.opacity = '';
+              heading.style.opacity = '';
+              origin.style.opacity = '';
+              origin.style.transform = '';
+            }
+          }
+        }, { passive: true });
+      })();
+      </script>
 
       <section class="container process-section" aria-label="Process">
         <div class="process-separator"></div>
@@ -1908,6 +2363,7 @@
       // Lazy load background image replacement (if you add <img>)
       document.addEventListener("DOMContentLoaded", () => {
         const imgPlaceholder = document.querySelector(".image-placeholder");
+        if (!imgPlaceholder) return;
         // Example for replacing placeholder with real image:
         const img = new Image();
         img.src = '/home/husnain/Downloads/portfoliosite/image_black_horse_behind.jpeg';
