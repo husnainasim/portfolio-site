@@ -284,6 +284,304 @@
       text-transform: uppercase;
     }
 
+    /* Approach Section — Premium Linear Timeline */
+    .approach-section {
+      padding: 100px 0 140px;
+      position: relative;
+    }
+
+    .approach-separator {
+      width: 100%;
+      height: 1px;
+      background: var(--line);
+      margin-bottom: 40px;
+    }
+
+    .approach-header {
+      margin-bottom: 80px;
+    }
+
+    .approach-top-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      padding: 0 0 24px;
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .approach-top-col {
+      display: flex;
+      align-items: center;
+      font-family: var(--display-font);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .approach-top-col.center {
+      justify-content: center;
+    }
+
+    .approach-top-col.right {
+      justify-content: flex-end;
+    }
+
+    .approach-intro {
+      max-width: 900px;
+    }
+
+    .approach-title {
+      font-family: var(--display-font);
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin: 0 0 16px;
+    }
+
+    .approach-subtitle {
+      font-family: var(--ui-font);
+      font-size: clamp(16px, 2vw, 18px);
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin: 0;
+      max-width: 720px;
+    }
+
+    /* Timeline Layout */
+    .approach-timeline {
+      position: relative;
+    }
+
+    .approach-flow {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding: 40px 0;
+    }
+
+    /* Vertical connector line */
+    .approach-flow::before {
+      content: '';
+      position: absolute;
+      left: 47px;
+      top: 60px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, 
+        var(--line) 0%, 
+        var(--blue) 25%, 
+        var(--green) 50%, 
+        var(--line) 100%);
+      opacity: 0.4;
+    }
+
+    .approach-phase {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 40px;
+      align-items: flex-start;
+      margin-bottom: 60px;
+      padding-left: 20px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 600ms cubic-bezier(0.2, 0.9, 0.2, 1),
+                  transform 600ms cubic-bezier(0.2, 0.9, 0.2, 1);
+    }
+
+    .approach-phase.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .phase-number {
+      position: relative;
+      font-family: var(--display-font);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+      padding-top: 8px;
+    }
+
+    .phase-number::before {
+      content: '';
+      position: absolute;
+      left: -47px;
+      top: 12px;
+      width: 16px;
+      height: 16px;
+      background: var(--bg);
+      border: 3px solid var(--line);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--blue);
+      z-index: 2;
+      transition: all 400ms cubic-bezier(0.2, 0.9, 0.2, 1);
+    }
+
+    .approach-phase.in-view .phase-number::before {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--blue);
+    }
+
+    .phase-content {
+      padding-top: 8px;
+    }
+
+    .phase-title {
+      font-family: var(--display-font);
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin: 0 0 12px;
+      line-height: 1.2;
+    }
+
+    .phase-desc {
+      font-family: var(--ui-font);
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin: 0 0 20px;
+      max-width: 540px;
+    }
+
+    .phase-points {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .phase-points li {
+      font-family: var(--ui-font);
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .phase-points li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 600;
+      opacity: 0.8;
+    }
+
+    .phase-divider {
+      display: none;
+    }
+
+    /* Hover effect on phases */
+    .approach-phase {
+      transition: all 300ms ease;
+    }
+
+    @media (hover: hover) {
+      .approach-phase:hover .phase-title {
+        color: var(--blue);
+      }
+
+      .approach-phase:hover .phase-number::before {
+        box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--green), 0 0 16px rgba(20, 199, 0, 0.4);
+        border-color: var(--green);
+      }
+
+      .approach-phase:hover .phase-number {
+        transform: scale(1.08);
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .approach-section {
+        padding: 80px 0 120px;
+      }
+
+      .approach-flow::before {
+        left: 25px;
+      }
+
+      .approach-phase {
+        grid-template-columns: 60px 1fr;
+        gap: 20px;
+        margin-bottom: 50px;
+      }
+
+      .phase-number {
+        font-size: 32px;
+      }
+
+      .phase-number::before {
+        left: -25px;
+        width: 12px;
+        height: 12px;
+        border-width: 2px;
+      }
+
+      .phase-title {
+        font-size: clamp(18px, 5vw, 24px);
+      }
+
+      .phase-desc {
+        font-size: 15px;
+      }
+
+      .phase-points li {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .approach-section {
+        padding: 60px 0 100px;
+      }
+
+      .approach-header {
+        margin-bottom: 60px;
+      }
+
+      .approach-phase {
+        grid-template-columns: 50px 1fr;
+        gap: 16px;
+        margin-bottom: 40px;
+        padding-left: 0;
+      }
+
+      .phase-number {
+        font-size: 24px;
+        padding-top: 4px;
+      }
+
+      .phase-number::before {
+        left: -24px;
+        width: 10px;
+        height: 10px;
+        border-width: 2px;
+      }
+
+      .phase-title {
+        font-size: clamp(16px, 4.5vw, 22px);
+      }
+
+      .phase-desc {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+    }
+
     /* Process */
     .process-section {
       padding: 60px 0 100px;
@@ -2004,63 +2302,81 @@
       })();
     </script>
 
-    <section class="container process-section" aria-label="Process">
-      <div class="process-separator"></div>
-      <div class="process-top-content">
-        <div class="process-top-col">
-          <div class="label">01</div>
+    <section class="container approach-section" aria-label="Approach">
+      <div class="approach-separator"></div>
+      <div class="approach-header">
+        <div class="approach-top-content">
+          <div class="approach-top-col">
+            <div class="label">01</div>
+          </div>
+          <div class="approach-top-col center">
+            <div class="label">//Approach</div>
+          </div>
+          <div class="approach-top-col right">
+            <div class="sub">Three Phases</div>
+          </div>
         </div>
-        <div class="process-top-col center">
-          <div class="label">//Approach</div>
-        </div>
-        <div class="process-top-col right">
-          <div class="sub">Three Phases</div>
+
+        <div class="approach-intro">
+          <h2 class="approach-title">How I Work</h2>
+          <p class="approach-subtitle">
+            A thoughtful, three-phase process tailored to transform your vision 
+            into production-ready systems. Clear thinking, sharp execution, lasting impact.
+          </p>
         </div>
       </div>
 
-      <div class="process-intro">
-        <h3 class="process-title">
-          I'M HUsnain Asim BASED<br />IN CALIFORNIA, USA.
-        </h3>
-        <p class="process-sub">
-          I employed responsive design skills to maintain consistency across
-          all devices.
-        </p>
-      </div>
+      <div class="approach-timeline">
+        <div class="approach-flow">
+          <div class="approach-phase" data-phase="1">
+            <div class="phase-number">01</div>
+            <div class="phase-content">
+              <h3 class="phase-title">Research & Planning</h3>
+              <p class="phase-desc">
+                Scope your product, design data flows, and architect with LLMs in mind. 
+                Requirements, prompts, and evaluation strategies shaped together.
+              </p>
+              <ul class="phase-points">
+                <li>Understand your vision & constraints</li>
+                <li>Design AI/ML strategy</li>
+                <li>Define success metrics</li>
+              </ul>
+            </div>
+            <div class="phase-divider"></div>
+          </div>
 
-      <div class="process-cards">
-        <div class="process-card" data-tilt>
-          <div class="process-circle"><span>01</span></div>
-          <div class="avatar-row" aria-hidden="true">
-            <span class="dot one"></span><span class="dot two"></span><span class="dot three"></span>
+          <div class="approach-phase" data-phase="2">
+            <div class="phase-number">02</div>
+            <div class="phase-content">
+              <h3 class="phase-title">Build & Optimize</h3>
+              <p class="phase-desc">
+                Ship robust backend systems with strong data models, APIs, and pipelines. 
+                Fast iteration, scalable from day one.
+              </p>
+              <ul class="phase-points">
+                <li>Build REST/GraphQL APIs</li>
+                <li>Implement vector search & pipelines</li>
+                <li>Deploy with observability</li>
+              </ul>
+            </div>
+            <div class="phase-divider"></div>
           </div>
-          <h5 class="process-heading">AI research & planning</h5>
-          <p class="process-text">
-            Scope the product, design the data flow, and leverage LLMs for
-            requirements, prompts, and evaluation strategies.
-          </p>
-        </div>
-        <div class="process-card" data-tilt>
-          <div class="process-circle"><span>02</span></div>
-          <div class="avatar-row" aria-hidden="true">
-            <span class="dot one"></span><span class="dot two"></span><span class="dot three"></span>
+
+          <div class="approach-phase" data-phase="3">
+            <div class="phase-number">03</div>
+            <div class="phase-content">
+              <h3 class="phase-title">Deliver & Monitor</h3>
+              <p class="phase-desc">
+                Elegant UIs wired end-to-end, integrated with robust logging, 
+                tracing, and analytics. Ready for production and beyond.
+              </p>
+              <ul class="phase-points">
+                <li>Design & build polished UIs</li>
+                <li>Full-stack integration</li>
+                <li>Monitor & iterate continuously</li>
+              </ul>
+            </div>
           </div>
-          <h5 class="process-heading">Backend & ai systems</h5>
-          <p class="process-text">
-            Build robust APIs, data pipelines, vector search, background
-            workers, and secure auth. Ship fast, scale safely.
-          </p>
-        </div>
-        <div class="process-card" data-tilt>
-          <div class="process-circle"><span>03</span></div>
-          <div class="avatar-row" aria-hidden="true">
-            <span class="dot one"></span><span class="dot two"></span><span class="dot three"></span>
-          </div>
-          <h5 class="process-heading">Full‑stack delivery</h5>
-          <p class="process-text">
-            Wire elegant UIs, integrate end‑to‑end, and monitor with logs,
-            tracing, and analytics for continuous improvement.
-          </p>
         </div>
       </div>
     </section>
@@ -2477,9 +2793,12 @@
     const title = document.querySelector(".title");
     if (!preferReduced) title?.classList.add("reveal");
 
-    // IntersectionObserver for .process-card
+    // IntersectionObserver for .process-card and .approach-phase
     const cards = document.querySelectorAll(".process-card, .service-card");
+    const phases = document.querySelectorAll(".approach-phase");
+    
     if ("IntersectionObserver" in window && !preferReduced) {
+      // Observer for process/service cards
       const obs = new IntersectionObserver(
         (entries, o) => {
           entries.forEach((entry) => {
@@ -2495,8 +2814,26 @@
         { threshold: 0.18 }
       );
       cards.forEach((c) => obs.observe(c));
+
+      // Observer for approach phases
+      const phaseObs = new IntersectionObserver(
+        (entries, o) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in-view");
+              // Stagger: set transition delay based on phase index
+              const idx = [...phases].indexOf(entry.target);
+              entry.target.style.transitionDelay = `${idx * 200}ms`;
+              o.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      phases.forEach((p) => phaseObs.observe(p));
     } else {
       cards.forEach((c) => c.classList.add("in-view"));
+      phases.forEach((p) => p.classList.add("in-view"));
     }
 
     // Lazy load background image replacement (if you add <img>)
